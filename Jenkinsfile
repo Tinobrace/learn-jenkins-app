@@ -9,10 +9,13 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                NPM_CONFIG_CACHE = "${WORKSPACE}/.npm-cache"
+            }
             steps {
                 sh '''
-                    mkdir -p .npm-cache
-                    npm config set cache $(pwd)/.npm-cache --global
+                    mkdir -p "$NPM_CONFIG_CACHE"
+                    echo "Cache dir: $NPM_CONFIG_CACHE"
                     ls -la
                     node --version
                     npm --version
