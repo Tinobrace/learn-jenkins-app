@@ -26,19 +26,20 @@ pipeline {
             }
         }
 
-        stage ('Test') {
+        stage('Test') {
             agent {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
-            
             steps { 
                 sh '''
                     test -f build/index.html
                     npm test
-                   '''
+                '''
+                // Archive test results for Jenkins
+                junit 'test-results/junit.xml'
             }
         }
     }
